@@ -14,12 +14,14 @@
 </head>
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<li><a href="/login.html" class="login">Login</a></li>
+			<li><a href="" class="logout" style="display:none;">Logout</a></li>
+
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -37,7 +39,7 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<h2>Mes Projets</h2><a id="btn-addproject" style="display:none;" href="#modal">Modifier</a>
 		<div class="filter">
 			<button class="btn-all">Tous</button>
 			<button class="btn-objets">Objets</button>
@@ -63,6 +65,36 @@
 	</section>
 </main>
 
+<div id="modal" class="modal" style=" display: none; 
+">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<h2>Ajouter un projet</h2>
+		<form action="#" method="post">
+			<label for="name">Nom</label>
+			<input type="text" name="name" id="name">
+			<label for="description">Description</label>
+			<textarea name="description" id="description" cols="30" rows="10"></textarea>
+			<label for="image">Image</label>
+			<input type="file" name="image" id="image">
+			<label for="category">Catégorie</label>
+			<select name="category" id="category">
+				<option value="objets">Objets</option>
+				<option value="appartements">Appartements</option>
+				<option value="hotels">Hôtels & restaurants</option>
+			</select>
+			<input type="submit" value="Ajouter">
+		</form>
+	</div>
+	<style>
+		.modal-content {
+			background-color: #fefefe;
+			margin: 15% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+		}
+	</style>
 <footer>
 	<nav>
 		<ul>

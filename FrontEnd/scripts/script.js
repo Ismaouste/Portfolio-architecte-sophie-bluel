@@ -20,6 +20,28 @@ window.addEventListener("load", () => {
   btnHotel.addEventListener("click", function () {
     loadWorks(3);
   });
+  const btnAddproject = document.querySelector(".btn-addproject");
+  const modalAddproject = document.querySelector("#modal");
+
+  if (localStorage.token != null) {
+    const login = document.querySelector(".login");
+    login.style.display = "none";
+    const logout = document.querySelector(".logout");
+    logout.style.display = "block";
+    btnAddproject.style.display = "block";
+  }
+
+  logout.addEventListener("click", function () {
+    localStorage.removeItem("token");
+    window.location.href = "index.html";
+  });
+
+  btnAddproject.addEventListener("click", function (event) {
+    event.preventDefault();
+    modalAddproject.style.display = "block";
+    return false;
+  });
+
 });
 
 function loadWorks(categoryId) {
@@ -57,4 +79,7 @@ function loadWorks(categoryId) {
   } catch {
     console.log("error");
   }
+
 }
+
+// 
