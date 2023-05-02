@@ -1,3 +1,4 @@
+
 // on page load (in the browser), load works from the backend
 window.addEventListener("load", () => {
   loadWorks();
@@ -133,3 +134,39 @@ function modal2() {
   modalAddproject1.style.display = "none";
   modalAddproject2.style.display = "block";
 }
+ 
+//add event listener on form enctype submit #form-modal to add a new work
+const formModal = document.getElementById("post-portfolio");
+const formButton = document.getElementById("form-modal");
+
+console.log(formModal);
+formModal.addEventListener("submit", function (event) {
+  event.preventDefault();
+  //get the data from the form
+  const formData = new FormData(formModal);
+  const title = formData.get("title");
+  const category = formData.get("category");
+  const formImage = document.getElementById("image");
+
+  const image = formData.get("image");
+  const token = localStorage.token;
+  //send the data to the backend
+  console.log(formData.get("image"));
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      //reload the works
+      loadWorks();
+      loadEditWorks();
+      //hide the modal
+      hideBody();
+    });
+});

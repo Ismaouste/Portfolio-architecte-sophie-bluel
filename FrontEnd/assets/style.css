@@ -303,8 +303,8 @@ footer nav ul {
   position: fixed;
   right: 0;
   top: 0;
-  max-width: 60%;
-  max-height: 60%;
+  max-width: 500px;
+  max-height: 600px;
   height: fit-content;
   display: none;
   background: white;

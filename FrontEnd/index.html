@@ -11,7 +11,6 @@
 		rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script src="./scripts/script.js"></script>
 	<script src="https://kit.fontawesome.com/3dc7b8a11e.js" crossorigin="anonymous"></script>
 	<!-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> -->
@@ -70,34 +69,22 @@
 				<div class="modal-content-2" style="display:none;">
 					<span class="close">&times;</span>
 					<h2>Ajout photo</h2>
-					<form id="post-portfolio" action="#" method="post">
-						<!-- invalid message -->
-						<div class="invalid-feedback invalidFileSize" style="display:none;">The maximum file is 1mb.
-							Please reduce the file size or change the new file.</div>
-						<div class="invalid-feedback invalidFileType" style="display:none;">Only PNG, JPEG and JPG file
-							type are acceptable. Please choose the new file type.</div>
+					<form id="post-portfolio" action="#" method="post" enctype="multipart/form-data">
+						<input type="file" name="image" id="image" accept="image/*">
 
-						<!-- Drag and drop file upload -->
-						<div class="file-drop-area">
-							<div class="file-drop-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-							<span class="file-drop-message">Drag and drop here to upload</span>
-							<input type="file" class="file-drop-input" accept=".png, .jpg, .jpeg">
-							<button type="button" class="file-drop-btn btn btn-primary btn-sm">+ Ajouter Photo</button>
-							<!-- <button type="button" class="btn btn-outline-secondary btn-sm remove-upload-btn">Remove</button> -->
-						</div>
-						<div class="modal-form-element"><label for="titre">Titre</label>
-							<input type="text" name="titre" id="titre">
+						<div class="modal-form-element"><label for="title">Titre</label>
+							<input type="text" name="title" id="title">
 						</div>
 						<div class="modal-form-element">
 							<label for="category">Catégorie</label>
 							<select name="category" id="category">
-								<option value="objets">Objets</option>
-								<option value="appartements">Appartements</option>
-								<option value="hotels">Hôtels & restaurants</option>
+								<option value="1">Objets</option>
+								<option value="2">Appartements</option>
+								<option value="3">Hôtels & restaurants</option>
 							</select>
 						</div>
 						<hr class="modal-hr">
-						<input type="submit" value="Valider">
+						<input id="form-modal" type="submit" onclick="" value="Valider">
 
 					</form>
 				</div>
@@ -141,6 +128,7 @@
 		</nav>
 	</footer>
 	<script src="./assets/drop-file-area/file-drag-drop.js"></script>
+	<script src="./scripts/script.js"></script>
 
 </body>
 
