@@ -33,9 +33,11 @@ formUser.addEventListener("submit", async (event) => {
     }
     // Stockage du token
     const data = await response.json();
-    c.setItem("token", data.token);
+
+    sessionStorage.setItem("token", data.token);
+    localStorage.setItem("token", data.token);
     // Redirection a admin.html
-    window.location.href = "admin.html";
+    window.location.href = "index.html";
   } catch (error) {
     console.error(error);
     // Change le style de errorUser (passe de display hidden a flex)
