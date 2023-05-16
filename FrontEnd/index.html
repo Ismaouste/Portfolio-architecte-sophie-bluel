@@ -56,8 +56,8 @@
 
 			<div id="modal" class="modal">
 				<div class="modal-content-1">
-					<span class="close">&times;</span>
-					<h2>Galerie photo</h2>
+					<span class="close-btn">&times;</span>
+					<h2 class="modal-title">Galerie photo</h2>
 					<div class="gallery-edit"></div>
 					<hr class="modal-hr">
 					<div class="modal-1-container">
@@ -67,11 +67,13 @@
 
 				</div>
 				<div class="modal-content-2" style="display:none;">
-					<span class="close">&times;</span>
-					<h2>Ajout photo</h2>
+					<span class="previous-btn">←</span>
+					<span class="close-btn">&times;</span>
+					<h2 class="modal-title">Ajout photo</h2>
 					<form id="post-portfolio" action="#" method="post" enctype="multipart/form-data">
+						<div class="upload-zone">
 						<input type="file" name="image" id="image" accept="image/*">
-
+						</div>			
 						<div class="modal-form-element"><label for="title">Titre</label>
 							<input type="text" name="title" id="title">
 						</div>

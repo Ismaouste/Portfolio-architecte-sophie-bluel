@@ -64,6 +64,7 @@ function hideBody(event) {
 }
 function logout(event) {
   localStorage.removeItem("token");
+  sessionStorage.removeItem("token");
   window.location.href = "index.html";
 }
 function loadWorks(categoryId) {
@@ -142,7 +143,6 @@ const formButton = document.getElementById("form-modal");
 console.log(formModal);
 formModal.addEventListener("submit", function (event) {
   event.preventDefault();
-  //get the data from the form
   const formData = new FormData(formModal);
   const title = formData.get("title");
   const category = formData.get("category");
@@ -155,7 +155,7 @@ formModal.addEventListener("submit", function (event) {
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      // "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     },
     body: formData,
