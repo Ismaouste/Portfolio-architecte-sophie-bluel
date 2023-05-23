@@ -72,7 +72,9 @@
 					<h2 class="modal-title">Ajout photo</h2>
 					<form id="post-portfolio" action="#" method="post" enctype="multipart/form-data">
 						<div class="upload-zone">
-						<input type="file" name="image" id="image" accept="image/*">
+						<input type="file" name="image" id="image" accept="image/*" hidden/>
+						<label for="image" id="image-label">+ Ajouter photo</label>
+							<p class="upload-conditions">jpg, png : 4mo max</p>
 						</div>			
 						<div class="modal-form-element"><label for="title">Titre</label>
 							<input type="text" name="title" id="title">
