@@ -12,9 +12,7 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="https://kit.fontawesome.com/3dc7b8a11e.js" crossorigin="anonymous"></script>
-	<!-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> -->
-	<link rel="stylesheet" href="./assets/drop-file-area/style.css">
+
 
 </head>
 
@@ -72,9 +70,10 @@
 					<h2 class="modal-title">Ajout photo</h2>
 					<form id="post-portfolio" action="#" method="post" enctype="multipart/form-data">
 						<div class="upload-zone">
-						<input type="file" name="image" id="image" accept="image/*" hidden/>
+							<i class="fa-regular fa-image" style="color: #B9C5CC;font-size:50px"></i>						<input type="file" name="image" id="image" accept="image/*" hidden/>
 						<label for="image" id="image-label">+ Ajouter photo</label>
 							<p class="upload-conditions">jpg, png : 4mo max</p>
+							<img id="preview" src="" alt="">
 						</div>			
 						<div class="modal-form-element"><label for="title">Titre</label>
 							<input type="text" name="title" id="title">

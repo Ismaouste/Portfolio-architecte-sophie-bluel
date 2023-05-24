@@ -1,4 +1,3 @@
-
 // on page load (in the browser), load works from the backend
 window.addEventListener("load", () => {
   loadWorks();
@@ -52,7 +51,27 @@ window.addEventListener("load", () => {
   showModal = () => {
     modalAddproject.style.display = "block";
   };
+  //when user pick an image to upload in the form#post-portfolio on input#image, display the image in the img#preview and display:none on label#image-label and p.upload-conditions
+
+  const imageInput = document.getElementById("image");
+  const imageLabel = document.getElementById("image-label");
+  const uploadConditions = document.getElementByClass("upload-conditions");
+  const uploadLogo = document.getElementByClass("fa-image");
+  const preview = document.getElementById("preview");
+
+  imageInput.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = function () {
+      preview.src = reader.result;
+      imageLabel.style.display = "none";
+      uploadConditions.style.display = "none";
+      uploadLogo.style.display = "none";
+    };
+  });
 });
+
 function hideBody(event) {
   const modalAddproject = document.querySelector("#modal");
   const modalBg = document.querySelector(".modal-bg");
@@ -135,7 +154,7 @@ function modal2() {
   modalAddproject1.style.display = "none";
   modalAddproject2.style.display = "block";
 }
- 
+
 //add event listener on form enctype submit #form-modal to add a new work
 const formModal = document.getElementById("post-portfolio");
 const formButton = document.getElementById("form-modal");
