@@ -298,6 +298,7 @@ footer nav ul {
   border-style: solid;
   border-color: #1d6156;
   margin: auto;
+  text-align: center;
 }
 .filter-btn:hover {
   background-color: #1d6156;
@@ -492,7 +493,8 @@ select {
 }
 
 #preview {
-  width: 100%;
+  width: auto;
+  max-height: 175px;
 }
 
 input[type="submit"] {
@@ -515,10 +517,14 @@ input[type="submit"] {
   height: 50px;
   font-size: 1.2em;
 }
+.gallery-element-edit {
+  position: relative;
+}
 
 .delete {
   background: black;
   position: absolute;
   padding: 0.3em;
   font-size: 10px;
+  right: 0;
 }

@@ -140,6 +140,7 @@ function loadEditWorks() {
         data.forEach((work) => {
           // add figure element inside div.gallery
           const figure = document.createElement("figure");
+          figure.classList.add("gallery-element-edit");
           figure.innerHTML = `
             <div class="delete"><i onclick="deleteWork(${work.id})" class="fa-solid fa-trash-can" style="color: #ffffff;"></i></div>
             <img class="gallery-edit-thumbnail"
@@ -162,10 +163,21 @@ function deleteWork(workId) {
         Authorization: `Bearer ${localStorage.token}`,
       },
     })
+// don't reload page
+    .then((response) => {
+      
+      if (response.status === 204) {
+    
 
         loadEditWorks();
         loadWorks();
-
+      } else {
+        alert("Une erreur est survenue");
+        console.log(response.status);
+        return false;
+      }
+    });
+  
   } catch {
     console.log("error");
   }
