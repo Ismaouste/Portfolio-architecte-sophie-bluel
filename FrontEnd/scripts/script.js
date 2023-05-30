@@ -28,7 +28,6 @@ window.addEventListener("load", () => {
   const modalAddproject = document.querySelector("#modal");
   const modalAddproject1 = document.querySelector(".modal-content-1");
   const modalAddproject2 = document.querySelector(".modal-content-2");
-  const modalAddproject3 = document.querySelector(".modal-content-3");
 
   if (localStorage.token != null) {
     const login = document.querySelector(".login");
@@ -37,6 +36,7 @@ window.addEventListener("load", () => {
     logout.style.display = "block";
     btnAddproject.style.display = "block";
   }
+  const logout = document.querySelector(".logout");
 
   logout.addEventListener("click", function () {
     localStorage.removeItem("token");
@@ -46,6 +46,7 @@ window.addEventListener("load", () => {
   btnAddproject.addEventListener("click", function (event) {
     event.preventDefault();
     modalAddproject.style.display = "block";
+    modalAddproject1.style.display = "block";
     return false;
   });
   showModal = () => {
@@ -55,8 +56,8 @@ window.addEventListener("load", () => {
 
   const imageInput = document.getElementById("image");
   const imageLabel = document.getElementById("image-label");
-  const uploadConditions = document.getElementByClass("upload-conditions");
-  const uploadLogo = document.getElementByClass("fa-image");
+  const uploadConditions = document.querySelector(".upload-conditions");
+  const uploadLogo = document.querySelector(".fa-image");
   const preview = document.getElementById("preview");
 
   imageInput.addEventListener("change", function (event) {
@@ -78,6 +79,9 @@ function hideBody(event) {
   var body = document.querySelector("body");
 
   modalAddproject.classList.toggle("modal-active");
+  modalAddproject1.style.display = "none";
+  modalAddproject2.style.display = "none";
+  modalAddproject.style.display = "none";
   modalBg.classList.toggle("modal-bg-active");
   body.classList.toggle("lightbox-on");
 }
@@ -137,7 +141,9 @@ function loadEditWorks() {
           // add figure element inside div.gallery
           const figure = document.createElement("figure");
           figure.innerHTML = `
-            <img class="gallery-edit-thumbnail" src="${work.imageUrl}" alt="${work.title}">
+            <div class="delete"><i onclick="deleteWork(${work.id})" class="fa-solid fa-trash-can" style="color: #ffffff;"></i></div>
+            <img class="gallery-edit-thumbnail"
+            onclick src="${work.imageUrl}" alt="${work.title}">
             <figcaption>éditer</figcaption>
         `;
           gallery.appendChild(figure);
@@ -148,9 +154,27 @@ function loadEditWorks() {
   }
 }
 
+function deleteWork(workId) {
+  try {
+    fetch(`http://localhost:5678/api/works/${workId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    })
+
+        loadEditWorks();
+        loadWorks();
+
+  } catch {
+    console.log("error");
+  }
+}
+
+const modalAddproject1 = document.querySelector(".modal-content-1");
+const modalAddproject2 = document.querySelector(".modal-content-2");
+
 function modal2() {
-  const modalAddproject1 = document.querySelector(".modal-content-1");
-  const modalAddproject2 = document.querySelector(".modal-content-2");
   modalAddproject1.style.display = "none";
   modalAddproject2.style.display = "block";
 }
@@ -163,12 +187,18 @@ console.log(formModal);
 formModal.addEventListener("submit", function (event) {
   event.preventDefault();
   const formData = new FormData(formModal);
-  const title = formData.get("title");
-  const category = formData.get("category");
-  const formImage = document.getElementById("image");
-
-  const image = formData.get("image");
   const token = localStorage.token;
+  // validate the form
+  if (formData.get("title") === "") {
+    alert("Please enter a title");
+    return;
+  }
+
+  if (formData.get("image") === "") {
+    alert("Please upload an image");
+    return;
+  }
+
   //send the data to the backend
   console.log(formData.get("image"));
   fetch("http://localhost:5678/api/works", {
@@ -187,5 +217,21 @@ formModal.addEventListener("submit", function (event) {
       loadEditWorks();
       //hide the modal
       hideBody();
+      formModal.reset();
     });
+});
+
+
+const closeBtn = document.querySelector(".close-btn");
+closeBtn.addEventListener("click", function () {
+  modalAddproject1.style.display = "none";
+  modalAddproject2.style.display = "none";
+  hideBody();
+}
+);
+
+const previousBtn = document.querySelector(".previous-btn");
+previousBtn.addEventListener("click", function () {
+  modalAddproject1.style.display = "block";
+  modalAddproject2.style.display = "none";
 });
