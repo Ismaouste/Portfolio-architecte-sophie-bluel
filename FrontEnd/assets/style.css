@@ -177,6 +177,10 @@ nav li {
 li:hover {
   color: #b1663c;
 }
+.btn-edit, .modal-content-2, .logout {
+  display: none;
+}
+
 #introduction {
   display: flex;
   align-items: center;
