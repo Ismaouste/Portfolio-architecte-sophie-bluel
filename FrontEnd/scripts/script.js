@@ -1,4 +1,3 @@
-// on page load (in the browser), load works from the backend
 window.addEventListener("load", () => {
   loadWorks();
   if (localStorage.token != null) {
@@ -6,9 +5,10 @@ window.addEventListener("load", () => {
   }
 
   const btnAll = document.querySelector(".btn-all");
-  const btnObjets = document.querySelector(".btn-objets");
-  const btnApps = document.querySelector(".btn-apps");
-  const btnHotel = document.querySelector(".btn-hotel");
+  const btnObjets = document.querySelector(".btn-items");
+  const btnApps = document.querySelector(".btn-flats");
+  const btnHotel = document.querySelector(".btn-hotels");
+
   btnAll.addEventListener("click", function () {
     loadWorks();
   });
@@ -24,10 +24,10 @@ window.addEventListener("load", () => {
   btnHotel.addEventListener("click", function () {
     loadWorks(3);
   });
+
   const btnAddproject = document.querySelector("#btn-addproject");
   const modalAddproject = document.querySelector("#modal");
   const modalAddproject1 = document.querySelector(".modal-content-1");
-  const modalAddproject2 = document.querySelector(".modal-content-2");
 
   if (localStorage.token != null) {
     const login = document.querySelector(".login");
@@ -100,10 +100,7 @@ function loadWorks(categoryId) {
         // and display them in the DOM
         const gallery = document.querySelector(".gallery");
         // check if data.categoryId === categoryId (if categoryId is defined)
-        // if yes, display the work
-        // if no, display all works
         gallery.innerHTML = "";
-
         data = data.filter((work) => {
           if (categoryId) {
             return work.categoryId === categoryId;
@@ -145,8 +142,7 @@ function loadEditWorks() {
             <div class="delete"><i onclick="deleteWork(${work.id})" class="fa-solid fa-trash-can" style="color: #ffffff;"></i></div>
             <img class="gallery-edit-thumbnail"
             onclick src="${work.imageUrl}" alt="${work.title}">
-            <figcaption>éditer</figcaption>
-        `;
+            <figcaption>éditer</figcaption>`;
           gallery.appendChild(figure);
         });
       });
@@ -163,12 +159,8 @@ function deleteWork(workId) {
         Authorization: `Bearer ${localStorage.token}`,
       },
     })
-// don't reload page
     .then((response) => {
-      
       if (response.status === 204) {
-    
-
         loadEditWorks();
         loadWorks();
       } else {
@@ -177,7 +169,6 @@ function deleteWork(workId) {
         return false;
       }
     });
-  
   } catch {
     console.log("error");
   }
@@ -195,22 +186,23 @@ function modal2() {
 const formModal = document.getElementById("post-portfolio");
 const formButton = document.getElementById("form-modal");
 
-console.log(formModal);
 formModal.addEventListener("submit", function (event) {
   event.preventDefault();
   const formData = new FormData(formModal);
   const token = localStorage.token;
   // validate the form
   if (formData.get("title") === "") {
-    alert("Please enter a title");
+    alert("Merci de renseigner un titre");
     return;
   }
-
   if (formData.get("image") === "") {
-    alert("Please upload an image");
+    alert("Merci de télécharger une image");
     return;
   }
-
+  if (formData.get("title") && formData.get("image") === "") {
+    alert("Merci de renseigner un titre et de télécharger une image");
+    return;
+  }
   //send the data to the backend
   console.log(formData.get("image"));
   fetch("http://localhost:5678/api/works", {
@@ -222,8 +214,7 @@ formModal.addEventListener("submit", function (event) {
     body: formData,
   })
     .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+    .then(() => {
       //reload the works
       loadWorks();
       loadEditWorks();
