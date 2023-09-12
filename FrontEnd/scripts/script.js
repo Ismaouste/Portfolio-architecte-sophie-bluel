@@ -28,20 +28,21 @@ window.addEventListener("load", () => {
   const modalAddproject = document.querySelector("#modal");
   const modalAddproject1 = document.querySelector(".modal-content-1");
   const modalAddproject2 = document.querySelector(".modal-content-2");
+  const logout = document.querySelector(".logout");
 
   if (localStorage.token != null) {
     const login = document.querySelector(".login");
     login.style.display = "none";
-    const logout = document.querySelector(".logout");
     logout.style.display = "block";
     btnAddproject.style.display = "block";
   }
-  const logout = document.querySelector(".logout");
 
-  logout.addEventListener("click", function () {
+  logout.addEventListener("click", logoutPortfolio);
+
+  function logoutPortfolio(event) {
     localStorage.removeItem("token");
     window.location.href = "index.html";
-  });
+  }
 
   btnAddproject.addEventListener("click", function (event) {
     event.preventDefault();
@@ -71,13 +72,11 @@ window.addEventListener("load", () => {
       uploadLogo.style.display = "none";
     };
   });
-});
+
 
 function hideBody(event) {
   const modalAddproject = document.querySelector("#modal");
-  const modalBg = document.querySelector(".modal-bg");
   var body = document.querySelector("body");
-
   modalAddproject.classList.toggle("modal-active");
   modalAddproject1.style.display = "none";
   modalAddproject2.style.display = "none";
@@ -85,11 +84,7 @@ function hideBody(event) {
   modalBg.classList.toggle("modal-bg-active");
   body.classList.toggle("lightbox-on");
 }
-function logout(event) {
-  localStorage.removeItem("token");
-  sessionStorage.removeItem("token");
-  window.location.href = "index.html";
-}
+
 function loadWorks(categoryId) {
   try {
     //fetch works from the backend
@@ -142,12 +137,17 @@ function loadEditWorks() {
           const figure = document.createElement("figure");
           figure.classList.add("gallery-element-edit");
           figure.innerHTML = `
-            <div class="delete"><i onclick="deleteWork(${work.id})" class="fa-solid fa-trash-can" style="color: #ffffff;"></i></div>
-            <img class="gallery-edit-thumbnail"
-            onclick src="${work.imageUrl}" alt="${work.title}">
+            <div class="delete"><i class="fa-solid fa-trash-can" style="color: #ffffff;"></i></div>
+            <img class="gallery-edit-thumbnail" src="${work.imageUrl}" alt="${work.title}">
             <figcaption>éditer</figcaption>
         `;
+
           gallery.appendChild(figure);
+          const deleteBtn = figure
+            .querySelector(".delete")
+            .addEventListener("click", function () {
+              deleteWork(work.id);
+            });
         });
       });
   } catch {
@@ -163,28 +163,21 @@ function deleteWork(workId) {
         Authorization: `Bearer ${localStorage.token}`,
       },
     })
-// don't reload page
-    .then((response) => {
-      
-      if (response.status === 204) {
-    
-
-        loadEditWorks();
-        loadWorks();
-      } else {
-        alert("Une erreur est survenue");
-        console.log(response.status);
-        return false;
-      }
-    });
-  
+      // don't reload page
+      .then((response) => {
+        if (response.status === 204) {
+          loadEditWorks();
+          loadWorks();
+        } else {
+          alert("Une erreur est survenue");
+          console.log(response.status);
+          return false;
+        }
+      });
   } catch {
     console.log("error");
   }
 }
-
-const modalAddproject1 = document.querySelector(".modal-content-1");
-const modalAddproject2 = document.querySelector(".modal-content-2");
 
 function modal2() {
   modalAddproject1.style.display = "none";
@@ -194,8 +187,9 @@ function modal2() {
 //add event listener on form enctype submit #form-modal to add a new work
 const formModal = document.getElementById("post-portfolio");
 const formButton = document.getElementById("form-modal");
+const actionButton = document.querySelector(".action-button");
+actionButton.addEventListener("click", modal2);
 
-console.log(formModal);
 formModal.addEventListener("submit", function (event) {
   event.preventDefault();
   const formData = new FormData(formModal);
@@ -223,7 +217,7 @@ formModal.addEventListener("submit", function (event) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       //reload the works
       loadWorks();
       loadEditWorks();
@@ -233,17 +227,20 @@ formModal.addEventListener("submit", function (event) {
     });
 });
 
-
 const closeBtn = document.querySelector(".close-btn");
 closeBtn.addEventListener("click", function () {
   modalAddproject1.style.display = "none";
   modalAddproject2.style.display = "none";
   hideBody();
-}
-);
+});
 
 const previousBtn = document.querySelector(".previous-btn");
 previousBtn.addEventListener("click", function () {
   modalAddproject1.style.display = "block";
   modalAddproject2.style.display = "none";
+});
+
+const modalBg = document.querySelector(".modal-bg");
+modalBg.addEventListener("click", hideBody);
+btnAddproject.addEventListener("click", hideBody);
 });

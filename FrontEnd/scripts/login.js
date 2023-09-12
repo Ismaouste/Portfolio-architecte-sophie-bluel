@@ -34,7 +34,6 @@ formUser.addEventListener("submit", async (event) => {
     // Stockage du token
     const data = await response.json();
 
-    sessionStorage.setItem("token", data.token);
     localStorage.setItem("token", data.token);
     // Redirection a admin.html
     window.location.href = "index.html";
