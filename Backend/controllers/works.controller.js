@@ -9,6 +9,7 @@ exports.findAll = async (req, res) =>  {
 exports.create = async (req, res) => {
 	console.log(req);
 	const host = req.get('host');
+	
 	const title = req.body.title;
 	const categoryId = req.body.category;
 	const userId = req.auth.userId;
