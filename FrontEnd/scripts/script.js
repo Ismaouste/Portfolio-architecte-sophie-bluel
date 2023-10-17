@@ -50,11 +50,9 @@ window.addEventListener("load", () => {
     event.preventDefault();
     modalAddproject.style.display = "block";
     modalAddproject1.style.display = "block";
-    return false;
-  });
-  showModal = () => {
-    modalAddproject.style.display = "block";
-  };
+    modalAddproject1.classList.add("modal-active");
+  } );
+  
   //when user pick an image to upload in the form#post-portfolio on input#image, display the image in the img#preview and display:none on label#image-label and p.upload-conditions
 
   const imageInput = document.getElementById("image");
@@ -84,6 +82,7 @@ function hideBody(event) {
   modalAddproject2.style.display = "none";
   modalAddproject.style.display = "none";
   modalBg.classList.toggle("modal-bg-active");
+  modalAddproject2.classList.remove("modal-active");
   body.classList.toggle("lightbox-on");
 }
 
@@ -93,7 +92,7 @@ function loadWorks(categoryId) {
     fetch("http://localhost:5678/api/works")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         // and display them in the DOM
         const gallery = document.querySelector(".gallery");
         // check if data.categoryId === categoryId (if categoryId is defined)
@@ -127,7 +126,7 @@ function loadEditWorks() {
     fetch("http://localhost:5678/api/works")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         // and display them in the DOM
         const gallery = document.querySelector(".gallery-edit");
         gallery.innerHTML = "";
@@ -168,7 +167,7 @@ function deleteWork(workId) {
           loadWorks();
         } else {
           alert("Une erreur est survenue");
-          console.log(response.status);
+          // console.log(response.status);
           return false;
         }
       });
@@ -179,6 +178,7 @@ function deleteWork(workId) {
 
 function modal2() {
   modalAddproject1.style.display = "none";
+  modalAddproject1.classList.remove("modal-active");
   modalAddproject2.style.display = "block";
 }
 
@@ -206,7 +206,7 @@ formModal.addEventListener("submit", function (event) {
     return;
   }
   //send the data to the backend
-  console.log(formData.get("image"));
+  // console.log(formData.get("image"));
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
@@ -236,6 +236,7 @@ closeBtn.addEventListener("click", function () {
 const previousBtn = document.querySelector(".previous-btn");
 previousBtn.addEventListener("click", function () {
   modalAddproject1.style.display = "block";
+  modalAddproject2.classList.remove("modal-active");
   modalAddproject2.style.display = "none";
 });
 
