@@ -1,14 +1,12 @@
 window.addEventListener("load", () => {
   loadWorks();
-  if (localStorage.token != null) {
-    loadEditWorks();
-  }
+
 
   const btnAll = document.querySelector(".btn-all");
   const btnObjets = document.querySelector(".btn-items");
   const btnApps = document.querySelector(".btn-flats");
   const btnHotel = document.querySelector(".btn-hotels");
-
+  const adminBar = document.querySelector(".admin-bar");
   btnAll.addEventListener("click", function () {
     loadWorks();
   });
@@ -26,17 +24,21 @@ window.addEventListener("load", () => {
   });
 
   const btnAddproject = document.querySelector("#btn-addproject");
+  const btnAddintro = document.querySelector("#btn-addintro");
   const modalAddproject = document.querySelector("#modal");
   const modalAddproject1 = document.querySelector(".modal-content-1");
   const modalAddproject2 = document.querySelector(".modal-content-2");
   const logout = document.querySelector(".logout");
-
+  const filterButtons = document.querySelector(".filter");
 
   if (localStorage.token != null) {
     const login = document.querySelector(".login");
     login.style.display = "none";
+    adminBar.style.display = "flex";
     logout.style.display = "block";
     btnAddproject.style.display = "block";
+    btnAddintro.style.display = "block";
+    filterButtons.style.display = "none";
   }
 
   logout.addEventListener("click", logoutPortfolio);
@@ -51,9 +53,8 @@ window.addEventListener("load", () => {
     modalAddproject.style.display = "block";
     modalAddproject1.style.display = "block";
     modalAddproject1.classList.add("modal-active");
-  } );
-  
-  //when user pick an image to upload in the form#post-portfolio on input#image, display the image in the img#preview and display:none on label#image-label and p.upload-conditions
+  });
+
 
   const imageInput = document.getElementById("image");
   const imageLabel = document.getElementById("image-label");
@@ -73,174 +74,47 @@ window.addEventListener("load", () => {
     };
   });
 
-
-function hideBody(event) {
-  const modalAddproject = document.querySelector("#modal");
-  var body = document.querySelector("body");
-  modalAddproject.classList.toggle("modal-active");
-  modalAddproject1.style.display = "none";
-  modalAddproject2.style.display = "none";
-  modalAddproject.style.display = "none";
-  modalBg.classList.toggle("modal-bg-active");
-  modalAddproject2.classList.remove("modal-active");
-  body.classList.toggle("lightbox-on");
-}
-
-function loadWorks(categoryId) {
-  try {
-    //fetch works from the backend
-    fetch("http://localhost:5678/api/works")
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        // and display them in the DOM
-        const gallery = document.querySelector(".gallery");
-        // check if data.categoryId === categoryId (if categoryId is defined)
-        gallery.innerHTML = "";
-        data = data.filter((work) => {
-          if (categoryId) {
-            return work.categoryId === categoryId;
-          } else {
-            return true;
-          }
-        });
-
-        data.forEach((work) => {
-          // add figure element inside div.gallery
-          const figure = document.createElement("figure");
-          figure.innerHTML = `
-            <img src="${work.imageUrl}" alt="${work.title}">
-            <figcaption>${work.title}</figcaption>
-        `;
-          gallery.appendChild(figure);
-        });
-      });
-  } catch {
-    console.log("error");
+  function hideBody(event) {
+    const modalAddproject = document.querySelector("#modal");
+    var body = document.querySelector("body");
+    modalAddproject.classList.toggle("modal-active");
+    modalAddproject1.style.display = "none";
+    modalAddproject2.style.display = "none";
+    modalAddproject.style.display = "none";
+    modalBg.classList.toggle("modal-bg-active");
+    modalAddproject2.classList.remove("modal-active");
+    body.classList.toggle("lightbox-on");
   }
-}
 
-function loadEditWorks() {
-  try {
-    //fetch works from the backend
-    fetch("http://localhost:5678/api/works")
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        // and display them in the DOM
-        const gallery = document.querySelector(".gallery-edit");
-        gallery.innerHTML = "";
-        data.forEach((work) => {
-          // add figure element inside div.gallery
-          const figure = document.createElement("figure");
-          figure.classList.add("gallery-element-edit");
-          figure.innerHTML = `
-            <div class="delete"><i class="fa-solid fa-trash-can" style="color: #ffffff;"></i></div>
-            <img class="gallery-edit-thumbnail" src="${work.imageUrl}" alt="${work.title}">
-            <figcaption>éditer</figcaption>
-        `;
-          gallery.appendChild(figure);
-          const deleteBtn = figure
-            .querySelector(".delete")
-            .addEventListener("click", function () {
-              deleteWork(work.id);
-            });
-        });
-      });
-  } catch {
-    console.log("error");
+  function modal2() {
+    modalAddproject1.style.display = "none";
+    modalAddproject1.classList.remove("modal-active");
+    modalAddproject2.style.display = "block";
   }
-}
 
-function deleteWork(workId) {
-  try {
-    fetch(`http://localhost:5678/api/works/${workId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.token}`,
-      },
-    })
-      // don't reload page
-      .then((response) => {
-        if (response.status === 204) {
-          loadEditWorks();
-          loadWorks();
-        } else {
-          alert("Une erreur est survenue");
-          // console.log(response.status);
-          return false;
-        }
-      });
-  } catch {
-    console.log("error");
-  }
-}
+  //add event listener on form enctype submit #form-modal to add a new work
+  const formModal = document.getElementById("post-portfolio");
+  const formButton = document.getElementById("form-modal");
+  const actionButton = document.querySelector(".action-button");
+  actionButton.addEventListener("click", modal2);
 
-function modal2() {
-  modalAddproject1.style.display = "none";
-  modalAddproject1.classList.remove("modal-active");
-  modalAddproject2.style.display = "block";
-}
+  formModal.addEventListener("submit", postWork);
 
-//add event listener on form enctype submit #form-modal to add a new work
-const formModal = document.getElementById("post-portfolio");
-const formButton = document.getElementById("form-modal");
-const actionButton = document.querySelector(".action-button");
-actionButton.addEventListener("click", modal2);
+  const closeBtn = document.querySelector(".close-btn");
+  closeBtn.addEventListener("click", function () {
+    modalAddproject1.style.display = "none";
+    modalAddproject2.style.display = "none";
+    hideBody();
+  });
 
-formModal.addEventListener("submit", function (event) {
-  event.preventDefault();
-  const formData = new FormData(formModal);
-  const token = localStorage.token;
-  // validate the form
-  if (formData.get("title") === "") {
-    alert("Merci de renseigner un titre");
-    return;
-  }
-  if (formData.get("image") === "") {
-    alert("Merci de télécharger une image");
-    return;
-  }
-  if (formData.get("title") && formData.get("image") === "") {
-    alert("Merci de renseigner un titre et de télécharger une image");
-    return;
-  }
-  //send the data to the backend
-  // console.log(formData.get("image"));
-  fetch("http://localhost:5678/api/works", {
-    method: "POST",
-    headers: {
-      // "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      //reload the works
-      loadWorks();
-      loadEditWorks();
-      //hide the modal
-      hideBody();
-      formModal.reset();
-    });
-});
+  const previousBtn = document.querySelector(".previous-btn");
+  previousBtn.addEventListener("click", function () {
+    modalAddproject1.style.display = "block";
+    modalAddproject2.classList.remove("modal-active");
+    modalAddproject2.style.display = "none";
+  });
 
-const closeBtn = document.querySelector(".close-btn");
-closeBtn.addEventListener("click", function () {
-  modalAddproject1.style.display = "none";
-  modalAddproject2.style.display = "none";
-  hideBody();
-});
-
-const previousBtn = document.querySelector(".previous-btn");
-previousBtn.addEventListener("click", function () {
-  modalAddproject1.style.display = "block";
-  modalAddproject2.classList.remove("modal-active");
-  modalAddproject2.style.display = "none";
-});
-
-const modalBg = document.querySelector(".modal-bg");
-modalBg.addEventListener("click", hideBody);
-btnAddproject.addEventListener("click", hideBody);
+  const modalBg = document.querySelector(".modal-bg");
+  modalBg.addEventListener("click", hideBody);
+  btnAddproject.addEventListener("click", hideBody);
 });

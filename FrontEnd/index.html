@@ -19,6 +19,14 @@
   </head>
 
   <body>
+<div class="admin-bar">
+  <div class="row">
+  <a id="btn-admin-edit" class="btn-edit btn-admin-edit" href="#modal">
+    <i class="fa fa-sharp fa-light fa-pen-to-square"></i> Mode édition</a
+  >
+  <a class="btn-admin">publier les changements</a>
+</div>
+</div>    
     <header>
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
@@ -36,7 +44,10 @@
       <section id="introduction">
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="" />
+          <a id="btn-addintro" class="btn-edit" href="#modal">
+            <i class="fa fa-sharp fa-light fa-pen-to-square" aria-hidden="true"></i> modifier</a>
         </figure>
+        
         <article>
           <h2>Designer d'espace</h2>
           <p>
@@ -117,7 +128,7 @@
               <div class="modal-form-element">
                 <label for="category">Catégorie</label>
                 <select name="category" id="category">
-                  <option value="1">Objets</option>
+                  <option  value="1">Objets</option>
                   <option value="2">Appartements</option>
                   <option value="3">Hôtels & restaurants</option>
                 </select>
@@ -159,6 +170,8 @@
         </ul>
       </nav>
     </footer>
+    <script src="./scripts/api.js"></script>
+
     <script src="./scripts/script.js"></script>
   </body>
 </html>

@@ -129,7 +129,6 @@ table {
 }
 /** end reset css**/
 body {
-  max-width: 1140px;
   margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
@@ -138,6 +137,12 @@ header {
   display: flex;
   justify-content: space-between;
   margin: 50px 0;
+}
+header,
+main,
+footer {
+  max-width: 1140px;
+  margin: auto;
 }
 section {
   margin: 50px 0;
@@ -177,7 +182,9 @@ nav li {
 li:hover {
   color: #b1663c;
 }
-.btn-edit, .modal-content-2, .logout {
+.btn-edit,
+.modal-content-2,
+.logout {
   display: none;
 }
 
@@ -284,12 +291,45 @@ footer nav ul {
   color: black;
   margin-left: 20px;
 }
+.admin-bar {
+  display: none;
+  height: 59px;
+  background-color: #000;
+  justify-content: center;
+  margin-bottom: 3em;
+
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-admin-edit {
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: white;
+  margin: 0 2em;
+  display: block;
+}
+.btn-admin {
+  text-decoration: none;
+  color: black;
+  padding: 7px 17px;
+  border-radius: 50px;
+  background: white;
+  font-family: "Work Sans";
+  font-size: 13px;
+  border: none;
+  font-weight: bold;
+}
 .filter {
   gap: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 0 20px 40px;
+  width: min-content;
+  margin: 0 auto 1em;
 }
 .filter-btn {
   border-radius: 50px;
@@ -487,7 +527,7 @@ select {
   align-items: center;
 }
 #image-label {
-  background-color: #CBD6DC;
+  background-color: #cbd6dc;
   color: #306685;
   padding: 1em;
   text-align: center;
