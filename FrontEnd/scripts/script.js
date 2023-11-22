@@ -1,11 +1,12 @@
-window.addEventListener("load", () => {
-  loadWorks();
+
+window.addEventListener("DOMContentLoaded", () => {
 
 
+  function loadSite() {
   const btnAll = document.querySelector(".btn-all");
-  const btnObjets = document.querySelector(".btn-items");
-  const btnApps = document.querySelector(".btn-flats");
-  const btnHotel = document.querySelector(".btn-hotels");
+  const btnObjets = document.querySelector(".btn-objets");
+  const btnApps = document.querySelector(".btn-appartements");
+  const btnHotel = document.querySelector(".btn-hotels--restaurants");
   const adminBar = document.querySelector(".admin-bar");
   btnAll.addEventListener("click", function () {
     loadWorks();
@@ -31,7 +32,7 @@ window.addEventListener("load", () => {
   const logout = document.querySelector(".logout");
   const filterButtons = document.querySelector(".filter");
 
-  if (localStorage.token != null) {
+  if (localStorage.token != null ) {
     const login = document.querySelector(".login");
     login.style.display = "none";
     adminBar.style.display = "flex";
@@ -117,4 +118,9 @@ window.addEventListener("load", () => {
   const modalBg = document.querySelector(".modal-bg");
   modalBg.addEventListener("click", hideBody);
   btnAddproject.addEventListener("click", hideBody);
-});
+}
+loadSite();
+}
+
+);
+

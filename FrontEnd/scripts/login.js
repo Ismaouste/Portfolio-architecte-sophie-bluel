@@ -12,8 +12,8 @@ formUser.addEventListener("submit", async (event) => {
   const email = document.querySelector("#email").value;
   const password = document.querySelector("#password").value;
   //
-  console.log(email);
-  console.log(password);
+  // console.log(email);
+  // console.log(password);
   //
   // Requêtes HTTP POST à l'API
   try {

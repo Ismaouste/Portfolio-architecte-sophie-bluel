@@ -1,4 +1,36 @@
+
+
 let works = []; 
+let categories = [];
+
+
+function loadCategories() {
+    try {
+      if (categories.length > 0) {
+        displayCategories();
+      } else {
+        // Fetch categories from the backend
+        fetch("http://localhost:5678/api/categories")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            if (response.status === 200) {
+            return response.json();
+            }
+          })
+          .then((data) => {
+            categories = data;
+            displayCategories();
+          })
+          .catch((error) => {
+            console.error('Error fetching categories:', error);
+          });
+      }
+    } catch (error) {
+      console.log("error loading categories:", error);
+    }
+  }
 
 function loadWorks(categoryId) {
     try {
@@ -50,11 +82,32 @@ function loadWorks(categoryId) {
       gallery.appendChild(figure);
     });
   }
+  function displayCategories() {
+    const filterButtons = document.querySelector(".filter");
+    filterButtons.innerHTML = '<a class="filter-btn btn-all">Tous</a>';
+    const categoriesList = document.querySelector("#category");
+    categories.forEach((category) => {
+      //Create filter buttons
+      const btn = document.createElement("a");
+      btn.classList.add("filter-btn");
+      btn.classList.add(`btn-${category.name.replace(/\s+/g, '-').replace(/[^\w-]+/g, '').toLowerCase()}`);
+      btn.innerText = category.name;
+      btn.setAttribute("data-id", category.id);
+      filterButtons.appendChild(btn);
+      // Create list of categories for Post Work form
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.innerText = category.name;
+      categoriesList.appendChild(option);
+    });
+  }
+
   
+
   function loadEditWorks() {
     const gallery = document.querySelector(".gallery-edit");
     gallery.innerHTML = "";
-    console.log(works);
+    // console.log(works);
     if (works.length)
     works.forEach((work) => {
       const figure = document.createElement("figure");
@@ -147,3 +200,7 @@ function loadWorks(categoryId) {
     })
 
   }
+
+
+loadWorks();
+loadCategories();
