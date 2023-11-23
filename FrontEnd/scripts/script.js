@@ -2,27 +2,10 @@
 window.addEventListener("DOMContentLoaded", () => {
 
 
-  function loadSite() {
-  const btnAll = document.querySelector(".btn-all");
-  const btnObjets = document.querySelector(".btn-objets");
-  const btnApps = document.querySelector(".btn-appartements");
-  const btnHotel = document.querySelector(".btn-hotels--restaurants");
+
+
+
   const adminBar = document.querySelector(".admin-bar");
-  btnAll.addEventListener("click", function () {
-    loadWorks();
-  });
-
-  btnObjets.addEventListener("click", function () {
-    loadWorks(1);
-  });
-
-  btnApps.addEventListener("click", function () {
-    loadWorks(2);
-  });
-
-  btnHotel.addEventListener("click", function () {
-    loadWorks(3);
-  });
 
   const btnAddproject = document.querySelector("#btn-addproject");
   const btnAddintro = document.querySelector("#btn-addintro");
@@ -118,8 +101,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const modalBg = document.querySelector(".modal-bg");
   modalBg.addEventListener("click", hideBody);
   btnAddproject.addEventListener("click", hideBody);
-}
-loadSite();
 }
 
 );

@@ -84,21 +84,28 @@ function loadWorks(categoryId) {
   }
   function displayCategories() {
     const filterButtons = document.querySelector(".filter");
-    filterButtons.innerHTML = '<a class="filter-btn btn-all">Tous</a>';
+    categories.unshift({ id: 0, name: "Tous" });
     const categoriesList = document.querySelector("#category");
     categories.forEach((category) => {
+
       //Create filter buttons
-      const btn = document.createElement("a");
+      const btn = document.createElement("button");
+      btn.addEventListener("click", function () {
+        loadWorks(category.id);
+      } );
+      
       btn.classList.add("filter-btn");
       btn.classList.add(`btn-${category.name.replace(/\s+/g, '-').replace(/[^\w-]+/g, '').toLowerCase()}`);
       btn.innerText = category.name;
       btn.setAttribute("data-id", category.id);
       filterButtons.appendChild(btn);
       // Create list of categories for Post Work form
+      if (category.id > 0) {
       const option = document.createElement("option");
       option.value = category.id;
       option.innerText = category.name;
       categoriesList.appendChild(option);
+      }
     });
   }
 
