@@ -1,12 +1,5 @@
-
 window.addEventListener("DOMContentLoaded", () => {
-
-
-
-
-
   const adminBar = document.querySelector(".admin-bar");
-
   const btnAddproject = document.querySelector("#btn-addproject");
   const btnAddintro = document.querySelector("#btn-addintro");
   const modalAddproject = document.querySelector("#modal");
@@ -15,7 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const logout = document.querySelector(".logout");
   const filterButtons = document.querySelector(".filter");
 
-  if (localStorage.token != null ) {
+  if (localStorage.token != null) {
     const login = document.querySelector(".login");
     login.style.display = "none";
     adminBar.style.display = "flex";
@@ -32,13 +25,12 @@ window.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   }
 
-  btnAddproject.addEventListener("click", function (event) {
+  btnAddproject.addEventListener("click", (event) => {
     event.preventDefault();
     modalAddproject.style.display = "block";
     modalAddproject1.style.display = "block";
     modalAddproject1.classList.add("modal-active");
   });
-
 
   const imageInput = document.getElementById("image");
   const imageLabel = document.getElementById("image-label");
@@ -46,7 +38,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const uploadLogo = document.querySelector(".fa-image");
   const preview = document.getElementById("preview");
 
-  imageInput.addEventListener("change", function (event) {
+  imageInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -58,9 +50,9 @@ window.addEventListener("DOMContentLoaded", () => {
     };
   });
 
-  function hideBody(event) {
+  function hideBody() {
     const modalAddproject = document.querySelector("#modal");
-    var body = document.querySelector("body");
+    const body = document.querySelector("body");
     modalAddproject.classList.toggle("modal-active");
     modalAddproject1.style.display = "none";
     modalAddproject2.style.display = "none";
@@ -76,23 +68,21 @@ window.addEventListener("DOMContentLoaded", () => {
     modalAddproject2.style.display = "block";
   }
 
-  //add event listener on form enctype submit #form-modal to add a new work
   const formModal = document.getElementById("post-portfolio");
-  const formButton = document.getElementById("form-modal");
   const actionButton = document.querySelector(".action-button");
   actionButton.addEventListener("click", modal2);
 
   formModal.addEventListener("submit", postWork);
 
   const closeBtn = document.querySelector(".close-btn");
-  closeBtn.addEventListener("click", function () {
+  closeBtn.addEventListener("click", () => {
     modalAddproject1.style.display = "none";
     modalAddproject2.style.display = "none";
     hideBody();
   });
 
   const previousBtn = document.querySelector(".previous-btn");
-  previousBtn.addEventListener("click", function () {
+  previousBtn.addEventListener("click", () => {
     modalAddproject1.style.display = "block";
     modalAddproject2.classList.remove("modal-active");
     modalAddproject2.style.display = "none";
@@ -101,7 +91,4 @@ window.addEventListener("DOMContentLoaded", () => {
   const modalBg = document.querySelector(".modal-bg");
   modalBg.addEventListener("click", hideBody);
   btnAddproject.addEventListener("click", hideBody);
-}
-
-);
-
+});
