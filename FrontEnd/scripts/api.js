@@ -149,6 +149,23 @@ function deleteWork(workId) {
     console.log("error", error);
   }
 }
+const modalBg = document.querySelector(".modal-bg");
+const btnAddproject = document.querySelector("#btn-addproject");
+const btnAddintro = document.querySelector("#btn-addintro");
+const modalAddproject = document.querySelector("#modal");
+const modalAddproject1 = document.querySelector(".modal-content-1");
+const modalAddproject2 = document.querySelector(".modal-content-2");
+function hideBody() {
+  const modalAddproject = document.querySelector("#modal");
+  const body = document.querySelector("body");
+  modalAddproject.classList.toggle("modal-active");
+  modalAddproject1.style.display = "none";
+  modalAddproject2.style.display = "none";
+  modalAddproject.style.display = "none";
+  modalBg.classList.toggle("modal-bg-active");
+  modalAddproject2.classList.remove("modal-active");
+  body.classList.toggle("lightbox-on");
+}
 
 function postWork(event) {
   event.preventDefault();
@@ -175,9 +192,11 @@ function postWork(event) {
       }
     })
     .then((data) => {
+      works.push(data);
       loadWorks();
       loadEditWorks();
       formModal.reset();
+      hideBody();
     })
     .catch((error) => {
       console.error("Post work request failed:", error);
